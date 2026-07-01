@@ -1,0 +1,32 @@
+% debugging mode
+% input variables 
+substrate_mode='on';
+substrate_upper=1.5;
+layer(1).upper=1.5;
+layer(1).material=1.5;
+layer(1).thickness=10;
+layer(2).material=2.5;
+layer(2).thickness=30;
+layer(3).material=1.5;
+layer(3).thickness=50;
+layer(4).material=1.5;
+layer(4).thickness=20;
+layer(5).material=1;
+layer(5).thickness=10;
+layer(5).down=3+4i;
+
+wavelength=515;
+which_pol='p-pol';
+count=0;
+tic
+for tt=10:1:10
+    count=count+1;
+    theta=tt;
+    pml_calculation
+    der(count)=output.R;
+    det(count)=output.T;
+end
+% pml_fields_abs(output)
+% pml_fields_E_sq(output);
+% pml_fields_E_sq_time(output);
+%     

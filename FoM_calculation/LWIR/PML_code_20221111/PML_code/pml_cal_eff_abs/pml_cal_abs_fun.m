@@ -1,0 +1,20 @@
+function abs_one_points=pml_cal_abs_fun(z,k_0,input)
+%%debug
+% z=[1*1e-9 2*1e-9];
+% k_0=output.k{1};
+% input.kz=output.k{2}(1).kz;
+% input.P=output.fields{1}(1).P;
+% input.Q=output.fields{1}(1).Q;
+% input.d_l_1=(sum(output.layer(1:1).thickness)-output.layer(1).thickness)*1e-9;
+% input.d_l=(sum(output.layer(1:1).thickness))*1e-9;
+% input.eps=output.eps(1+1);
+c_speed=299792458; %m/sec
+eps_0=8.854187817*1e-12; %(F/m)
+%z,k_0,input ; all length scale 'm';
+%input.P input.Q input.d_l_1 input.d_l input.kz input.eps
+E_xyz=pml_fields_core(z,input);
+abs_one_points=(1/2)*eps_0*k_0*c_speed*imag(input.eps)*sum(abs(E_xyz).^2);
+
+    
+
+
