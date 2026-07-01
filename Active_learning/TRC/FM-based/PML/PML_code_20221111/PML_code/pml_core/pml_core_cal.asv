@@ -1,0 +1,8 @@
+function output=pml_core_cal(detail_layer,wavelength,kx,which_pol)
+[kz_layer k_0 num_layer]=pml_core_cal_kz(detail_layer,wavelength,kx);
+[amp_layer eps_layer]=pml_core_cal_transmitt(detail_layer,kz_layer,k_0,num_layer,which_pol);
+[E_s_pol H_s_pol]=pml_core_cal_E_H_field(amp_layer,num_layer,which_pol,kz_layer,kx,k_0,eps_layer);
+output.k={k_0 kz_layer kx};
+output.fields={E_s_pol H_s_pol};
+output.eps=eps_layer;
+output.layer=detail_layer;

@@ -1,0 +1,33 @@
+function [abs_power delta_z vector_z k_0 c_speed]=pml_fields_abs_single(nlayer,output)  
+%output,nlayer
+c_speed=299792458;
+nm=1e-9;
+k_0=output.k{1};
+E_fields=output.fields{1};
+H_fields=output.fields{2};
+input.kz=output.k{2}(nlayer).kz;
+input.P=output.fields{1}(nlayer).P;
+input.Q=output.fields{1}(nlayer).Q;
+input.d_l_1=(sum_thick(output.layer,1,nlayer-1))*nm;
+input.d_l=(sum_thick(output.layer,1,nlayer))*nm;
+input.eps=output.eps(1+nlayer);
+
+z_l=input.d_l;
+z_l_1=input.d_l_1;
+delta_z=0.05*nm;
+vector_z=z_l_1:delta_z:z_l;
+if strcmp(output.layer(1).subs,'off')
+   abs_power=pml_cal_abs_fun(vector_z,k_0,input);
+elseif strcmp(output.layer(1).subs,'on')
+    R_ms=output.subs_coeff.R_ms;
+    R_sm=output.subs_coeff.R_sm;
+    T_ms=output.subs_coeff.T_ms;
+    T_sm=output.subs_coeff.T_sm;
+    if strcmp(output.fields_pol,'p-pol')
+        coeff_subs=(1/(1-abs(H_fields(1).R)^2*abs(R_sm)^2))*abs(T_ms)^2;
+        abs_power=coeff_subs*pml_cal_abs_fun(vector_z,k_0,input);
+    elseif strcmp(output.fields_pol,'s-pol')
+        coeff_subs=(1/(1-abs(E_fields(1).R)^2*abs(R_sm)^2))*abs(T_ms)^2;
+        abs_power=coeff_subs*pml_cal_abs_fun(vector_z,k_0,input);
+    end
+end

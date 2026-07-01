@@ -1,0 +1,29 @@
+%sub_u
+%detail_layer(1).upper_index
+%kx wavelength
+%mode
+nm=1e-9;
+k_0=2*pi/(wavelength*nm);
+
+dummy_eps=(sub_u)^2;
+eps_m=(real(dummy_eps))+1i*abs(imag(dummy_eps));
+dummy_eps=(detail_layer(1).upper_index)^2;
+eps_s=(real(dummy_eps))+1i*abs(imag(dummy_eps));
+
+dummy_ks=k_0*detail_layer(1).upper_index;
+dummy_kzs_1=sqrt(dummy_ks^2-kx^2);
+kz_s=abs(real(dummy_kzs_1))+1i*abs(imag(dummy_kzs_1));
+
+dummy_km=k_0*sub_u;
+dummy_kzm_1=sqrt(dummy_km^2-kx^2);
+kz_m=abs(real(dummy_kzm_1))+1i*abs(imag(dummy_kzm_1));
+
+if strcmp(mode,'s-pol')
+    R_ms=(kz_m-kz_s)/(kz_m+kz_s);
+    T_ms=2*kz_m/(kz_m+kz_s);
+    R_sm=(kz_s-kz_m)/(kz_s+kz_m);
+    T_sm=2*kz_s/(kz_s+kz_m);
+end
+if strcmp(mode,'
+ 
+

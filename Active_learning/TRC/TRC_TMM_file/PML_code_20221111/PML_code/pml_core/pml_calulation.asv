@@ -1,0 +1,11 @@
+%input variables
+%substrate_mode='on' or 'off' 
+%substrate_upper= digit number or string. / index of substrate upper
+%layer(1).upper= digit number or string.  / index of substrate(if
+%substrate_mode=on) , index of semi-infinite medium (if substrate_mode=off)
+%layer(nk
+
+[detail_layer kx wavelength subs_coeff]=pml_layer2detail(layer, substrate_mode ,substrate_upper ,wavelength ,theta,which_pol);
+output=pml_core_cal(detail_layer,wavelength,kx,which_pol,subs_coeff);
+output=pml_cal_eff_R_T(output); 
+output=pml_eff_abs(output);
